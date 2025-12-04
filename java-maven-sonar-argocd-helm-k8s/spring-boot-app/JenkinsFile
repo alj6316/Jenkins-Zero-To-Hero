@@ -6,13 +6,13 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
-  stages {
-      // Add this stage first
-      stage('Clean Workspace') {
-          steps {
-              cleanWs()  // Clean workspace before starting
-          }
-      }
+    stage('Clean git') {
+        steps {
+                sh '''
+                    rm -rfv .git
+                '''
+        }
+    }
   stages {
     stage('Checkout') {
       steps {
