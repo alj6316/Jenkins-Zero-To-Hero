@@ -6,6 +6,23 @@ pipeline {
     }
   }
   stages {
+      stage('Cache Maven Dependencies') {
+            steps {
+                cache(
+                    cacheConfig: [
+                        [
+                            path: '$HOME/.m2/repository',
+                            includes: '**/*.jar',
+                            excludes: '',
+                            cacheValidityDecidingFile: 'pom.xml'
+                        ]
+                    ],
+                    readOnly: false
+                ) {
+                    sh 'mvn dependency:resolve'
+                }
+            }
+        }
   //  stage('Clean Workspace') {
   //      steps {
   //           cleanWs()  // Jenkins clean workspace step
