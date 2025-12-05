@@ -6,11 +6,11 @@ pipeline {
     }
   }
   stages {
-    stage('Clean Workspace') {
-        steps {
-             cleanWs()  // Jenkins clean workspace step
-        }
-    }
+  //  stage('Clean Workspace') {
+  //      steps {
+  //           cleanWs()  // Jenkins clean workspace step
+  //      }
+  //  }
     stage('Checkout') {
       steps {
         sh 'echo passed'
