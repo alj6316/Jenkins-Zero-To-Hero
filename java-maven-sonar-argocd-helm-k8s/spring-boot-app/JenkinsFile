@@ -75,7 +75,7 @@ pipeline {
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                     chown -R 114:122 /var/lib/jenkins
-                    sudo chmod -R 755 /var/lib/jenkins
+                    chmod -R 755 /var/lib/jenkins
                 '''
             }
         }
