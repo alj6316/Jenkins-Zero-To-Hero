@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: kjhfgvbnmcjkhweb/jenkinslab:22
+        image: kjhfgvbnmcjkhweb/jenkinslab:70
         ports:
         - containerPort: 8080
