@@ -1,42 +1,11 @@
 pipeline {
   agent {
-    kubernetes {
-      label 'maven-builder-pod'
-      yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: jenkins-maven-builder-${BUILD_NUMBER}
-spec:
-  containers:
-  - name: maven
-    image: abhishekf5/maven-abhishek-docker-agent:v1
-    command: ['cat']
-    tty: true
-    volumeMounts:
-    - name: maven-cache
-      mountPath: /root/.m2
-    - name: docker-socket
-      mountPath: /var/run/docker.sock
-    securityContext:
-      runAsUser: 0  # Run as root
-  volumes:
-  - name: maven-cache
-    hostPath:
-      path: /var/lib/jenkins/.m2
-  - name: docker-socket
-    hostPath:
-      path: /var/run/docker.sock
-"""
+    docker {
+     image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 --name jenkins-maven-builder-${BUILD_NUMBER}' // mount Docker socket to access the host's Docker daemon
     }
+                                            //        image 'maven:3.9.4-eclipse-temurin-17'  // Java 17
   }
-//  agent {
-//    docker {
-//     image 'abhishekf5/maven-abhishek-docker-agent:v1'
-//      args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 --name jenkins-maven-builder-${BUILD_NUMBER}' // mount Docker socket to access the host's Docker daemon
-//    }
-//                                            //        image 'maven:3.9.4-eclipse-temurin-17'  // Java 17
-//  }
   stages {
 //  //  stage('Clean Workspace') {
 // //      steps {
